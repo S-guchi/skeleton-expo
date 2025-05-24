@@ -1,7 +1,14 @@
-import { Stack } from "expo-router";
+import { useAuth } from "@/contexts/AuthProvider";
+import { Redirect, Stack } from "expo-router";
+import { ActivityIndicator } from "react-native";
 
 export default function AuthedLayout() {
-  /** 認証チェックはここに仕込んでも良い */
+  const { user, loading } = useAuth();
+
+  if (loading) return <ActivityIndicator />;
+  if (!user) {
+    return <Redirect href="/(auth)" />;
+  }
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />

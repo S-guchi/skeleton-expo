@@ -1,33 +1,28 @@
-import { useRouter } from "expo-router";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useAuth } from "@/contexts/AuthProvider";
+import { signInWithGoogle, useGoogleAuthRequest } from "@/lib/googleSignIn";
+import { router } from "expo-router";
+import React from "react";
+import { ActivityIndicator, Button, View } from "react-native";
 
 export default function LoginScreen() {
-  const router = useRouter(); // ← 追加
+  const { user, loading } = useAuth();
+  const [request, response, promptAsync] = useGoogleAuthRequest();
 
-  const handleLogin = () => {
-    // ここでメール / パスワードのバリデーションや Firebase Auth などを実行
-    // await signInWithEmailAndPassword(...);
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      signInWithGoogle(response.params.id_token);
+    }
+  }, [response]);
 
-    // 認証後、タブの Home へ遷移
+  if (loading) return <ActivityIndicator />;
+  if (user) {
     router.replace("/(authenticated)/(tabs)/home");
-  };
+    return null;
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Log in</Text>
-      <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      <Button title="Log in" onPress={handleLogin} />
-      <View className="flex-1 justify-center items-center bg-black">
-        <Text className="text-2xl font-bold text-blue-500">Hello NativeWind</Text>
-      </View>
+    <View className="flex-1 items-center justify-center gap-4">
+      <Button disabled={!request} title="Google でログイン" onPress={() => promptAsync()} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 24, gap: 12 },
-  title: { fontSize: 28, fontWeight: "600", textAlign: "center", marginBottom: 12 },
-  input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 6, padding: 8 },
-  link: { color: "dodgerblue", textAlign: "center" },
-});
