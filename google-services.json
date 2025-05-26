@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "47307687782",
+    "project_id": "skeletonexpo",
+    "storage_bucket": "skeletonexpo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47307687782:android:93fd907aeb59e88715aaa7",
+        "android_client_info": {
+          "package_name": "com.purotoko.skeletonexpo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47307687782-ht602r1v66cbpp3qs7f7lu2mtmdjkbnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTbFYx2S_9HGxpLnHeR3yDcXcXn1AyPCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47307687782-ht602r1v66cbpp3qs7f7lu2mtmdjkbnd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "47307687782-rt1ol2oq8394tcul2klunt14ti7bs6vq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.purotoko.skeletonexpo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

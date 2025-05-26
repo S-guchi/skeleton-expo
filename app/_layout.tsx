@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/contexts/AuthProvider";
+import { AuthProvider } from "@/hooks/useAuth";
 import "@/global.css";
 import { NAV_THEME } from "@/lib/constants";
 import { useColorScheme } from "@/lib/useColorScheme";

@@ -1,11 +1,9 @@
-import { useAuth } from "@/contexts/AuthProvider";
+import { useAuth } from "@/hooks/useAuth";
 import { Redirect, Stack } from "expo-router";
-import { ActivityIndicator } from "react-native";
 
 export default function AuthedLayout() {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
-  if (loading) return <ActivityIndicator />;
   if (!user) {
     return <Redirect href="/(auth)" />;
   }

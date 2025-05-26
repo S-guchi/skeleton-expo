@@ -1,17 +1,36 @@
-import * as Google from "expo-auth-session/providers/google";
-import { useEffect } from "react";
-import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
+import { FirebaseAuthTypes, getAuth, GoogleAuthProvider } from "@react-native-firebase/auth";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
-export const useGoogleAuthRequest = () =>
-  Google.useAuthRequest({
-    clientId: process.env.EXPO_PUBLIC_EXPO_CLIENT_ID,
-    iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
-    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
-  });
+// Firebase Console → 認証 → Google → ウェブクライアントID
+GoogleSignin.configure({
+  webClientId: "47307687782-ht602r1v66cbpp3qs7f7lu2mtmdjkbnd.apps.googleusercontent.com",
+});
 
-export async function signInWithGoogle(idToken: string | null) {
-  if (!idToken) throw new Error("No id_token");
-  const credential = GoogleAuthProvider.credential(idToken);
-  await signInWithCredential(auth, credential);
+export const listenAuth = (cb: (u: FirebaseAuthTypes.User | null) => void) => {
+  const authInstance = getAuth();
+  return authInstance.onAuthStateChanged(cb);
+};
+
+export async function signInWithGoogle() {
+  // Play Services チェック（Android 推奨）
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+
+  // Google → Firebase Credential 化
+  const { data } = await GoogleSignin.signIn();
+  if (!data) {
+    throw new Error("Google ログインに失敗しました");
+  }
+  const credential = GoogleAuthProvider.credential(data.idToken);
+  const authInstance = getAuth();
+  await authInstance.signInWithCredential(credential);
 }
+
+// ログアウト関数を追加
+export const signOut = async () => {
+  const authInstance = getAuth();
+  await authInstance.signOut();
+  // Google Sign-In からもサインアウト
+  await GoogleSignin.signOut();
+};
+
+export const firebaseAuth = getAuth();
