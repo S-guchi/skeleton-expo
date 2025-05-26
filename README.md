@@ -6,37 +6,25 @@
 - [x] firebaseの設定
 - [x] ログイン画面の作成
 
-### ローカルでの実行
+## usage
+
+Bare Workflow
 
 ```bash
-npx expo start -c
-```
-
-### dev ビルド
-
-```bash
-npx expo install expo-dev-client
-```
-
-- android
-
-```bash
-eas build --platform android --profile development
-```
-
-### 証明書発行
-
-```bash
-eas credentials
-```
-
-### build
-
-```bash
+npm i
 npx expo prebuild --clean
 ```
 
-sha1を発行してfirebaseの認証のところに登録
+```bash
+npx expo run:ios
+npx expo run:android
+```
+
+- ビルド前にfirebaseから以下のファイルを取得しプロジェクトのRootに配置する
+  - google-services.json
+  - GoogleService-Info.plist
+
+- androidはfirebaseにsha-1の設定が必要。ビルド後以下のコマンドで取得する。
 
 ```bash
 keytool -list -v \
@@ -45,14 +33,9 @@ keytool -list -v \
   -storepass android -keypass android
 ```
 
-```bash
-npx expo run:ios
-npx expo run:android
-```
-
 ### apiクライアントの作成
 
-openapiに対応
+必要なら作る。openapiに対応
 
 ```
 npx ts-node scripts/generate-api.js
