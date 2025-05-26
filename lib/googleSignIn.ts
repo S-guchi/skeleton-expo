@@ -3,7 +3,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 // Firebase Console → 認証 → Google → ウェブクライアントID
 GoogleSignin.configure({
-  webClientId: "47307687782-ht602r1v66cbpp3qs7f7lu2mtmdjkbnd.apps.googleusercontent.com",
+  webClientId: process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID,
 });
 
 export const listenAuth = (cb: (u: FirebaseAuthTypes.User | null) => void) => {
